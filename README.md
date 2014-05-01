@@ -15,6 +15,8 @@ callback giving you the option to do something with them.
 Additionally, `fifo` also stores all of your `key:value` pairs on one key
 in `localStorage` for [better performance][perf].
 
+Build status: [![Build Status](https://travis-ci.org/rpflorence/fifo.svg?branch=master)](https://travis-ci.org/reflorence/fifo)
+
 API
 ---
 
@@ -32,23 +34,37 @@ collection.set('task:2', 'close two tickets', function(removedItems){
   // Each item is an object with properties `key` and `value`
 });
 
-// retrieve an item
+// retrieve an item - preference for fixed items, then FIFO queue
 var storedTask = collection.get('task:1'); //> 'close two tickets'
 
 // retrieve all items by sending no arguments to get
 var tasks = collection.get();
 
-// remove an item
+// remove an item - preference for fixed items, then FIFO queue
 collection.remove('task:1');
 
-// empty an entire collection
+// empty an entire FIFO queue
 collection.empty()
 
 // set any JavaScript object, don't have to JSON.parse or JSON.stringify
 // yourself when setting and getting.
 collection.set('task:2', { due: 'sunday', task: 'go to church' });
 collection.set('whatevz', [1,2,3]);
+
+// set a fixed value in localStorage
+collection.setFixed('fixed', 'Do not delete me')
+
+// get a list of all keys, both those in fifo and fixed localstorage
+collection.keys  /* Returns an array of key names */
+
+// Check to see if a key exists in the FIFO queue or fixed localstorage
+collection.has 'key' /* true or false */
 ```
+
+Warning
+--------
+
+It is possible to cause a collision of keys in the fixed storage and FIFO queue. In all cases of 'get' and 'remove' the fixed storage is used in preference.
 
 Browser Support
 ---------------
@@ -65,6 +81,24 @@ running `npm install .` from the root of this repository. Also, run
 `./watch` to have the coffeescript automatically compile as you save.
 
 Test by opening `test.html` in a browser.
+
+Alternatively install phantomjs using:
+
+```
+npm i -g phantomjs
+```
+
+Install dependencies as normal:
+
+```
+npm i .
+```
+
+...and enjoy automated testing goodness by running:
+
+```
+npm test
+```
 
 License
 -------

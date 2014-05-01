@@ -1,3 +1,2 @@
 # coffee needs to be in your path
-coffee -o dist/ -wb ./
-
+coffee -o dist/ -wb ./lib
