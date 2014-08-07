@@ -2,7 +2,10 @@
   "name": "fifo",
   "version": "1.0.0",
   "devDependencies": {
-    "coffee-script": "*"
+    "coffee-script": "*",
+    "phantomjs": "~1.9.7-5"
+  },
+  "scripts": {
+      "test": "coffee -o dist/ ./lib && phantomjs test/index.js"
   }
 }
-
